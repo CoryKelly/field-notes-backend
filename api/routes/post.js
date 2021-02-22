@@ -13,9 +13,8 @@ const storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
+
 const upload = multer({ storage })
-// Limit FileSize in multer
-// Example: limits: { fileSize: <1024 * 1024 * 5>
 
 // Mongoose Models
 const Post = require('../models/post')
