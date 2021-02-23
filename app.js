@@ -47,5 +47,6 @@ const main = async () => {
     consola.error(`Unable to start the server ${e.message}`)
   }
 }
+
 main().then()
 
