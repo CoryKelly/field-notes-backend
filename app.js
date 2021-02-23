@@ -7,7 +7,6 @@ const { json, urlencoded } = require('body-parser')
 const consola = require('consola')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const port = process.env.PORT || 3000
 
 // Routes
 const postRoutes = require('./api/routes/post')
@@ -23,7 +22,6 @@ app.use(expressCspHeader({
 app.use('/static/', express.static('static'))
 app.use(urlencoded({extended: false}))
 app.use(json())
-
 app.use(cors())
 app.use('/posts', postRoutes)
 
@@ -42,8 +40,8 @@ const main = async () => {
       useUnifiedTopology: true
     })
     consola.success("DataBase Connected..")
-    app.listen(port, () => {
-      consola.success(`App listening at http://localhost:${port}`)
+    app.listen(process.env.PORT || 3000, () => {
+      consola.success(`App listening at http://localhost:${process.env.PORT}`)
     })
   } catch (e) {
     consola.error(`Unable to start the server ${e.message}`)
