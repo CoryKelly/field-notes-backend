@@ -1,7 +1,7 @@
 const express = require('express')
 const { expressCspHeader } = require('express-csp-header');
-const app = express()
 const cors = require('cors')
+const app = express()
 const morgan = require('morgan')
 const { json, urlencoded } = require('body-parser')
 const consola = require('consola')
