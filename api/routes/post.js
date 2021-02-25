@@ -57,6 +57,7 @@ router.post('/createPost', upload.single('photo') , (req, res) => {
   // Save Post
   post.save().then( result => {
     const { _id, title, notes, task, product, amount, units, mowHeight, date, photo, zone } = result;
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     res.status(201).json({
         title, notes, task, photo, _id, product, amount, units, mowHeight, date, zone
       })
