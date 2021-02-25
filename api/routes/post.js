@@ -1,8 +1,14 @@
 const express = require('express')
+const cors = require('cors')
 const { Types } = require('mongoose')
 const multer = require('multer')
 const consola = require('consola')
 const router = express.Router()
+
+const corsOptions = {
+  origin: 'https://fieldnotes-f0ccd.web.app',
+  optionsSuccessStatus: 200
+}
 
 // Image Upload Config
 const storage = multer.diskStorage({
@@ -21,7 +27,7 @@ const Post = require('../models/post')
 
 
 // GET ALL POST
-router.get('/', (req, res) => {
+router.get('/', cors(corsOptions), (req, res) => {
   Post.find().select('_id title notes task product amount units mowHeight date photo zone').exec().then(result => {
     const response = {
       count: result.length,
@@ -37,7 +43,7 @@ router.get('/', (req, res) => {
 })
 
 // POST NEW POST
-router.post('/createPost', upload.single('photo') , (req, res) => {
+router.post('/createPost', cors(corsOptions), upload.single('photo') , (req, res) => {
   const post = new Post({
     _id: new Types.ObjectId(),
     title: req.body.title,
@@ -64,7 +70,7 @@ router.post('/createPost', upload.single('photo') , (req, res) => {
 })
 
 // GET POST BY ID
-router.get('/:postId', (req, res) => {
+router.get('/:postId', cors(corsOptions), (req, res) => {
   const { postId: id } = req.params;
   Post.findById(id).select('_id title notes task product amount units mowHeight date photo zone').exec().then(result => {
     if(result) {
@@ -81,7 +87,7 @@ router.get('/:postId', (req, res) => {
 })
 
 // UPDATE Post
-router.patch('/:postId', (req, res) => {
+router.patch('/:postId', cors(corsOptions), (req, res) => {
   const { postId: id } = req.params;
   Post.updateOne({ _id: id }, { $set: req.body }).exec().then(() => {
     res.status(200).json({
@@ -95,7 +101,7 @@ router.patch('/:postId', (req, res) => {
 })
 
 // DELETE Post
-router.delete('/:postId', (req, res) => {
+router.delete('/:postId', cors(corsOptions), (req, res) => {
   const { postId: id } = req.params;
   Post.deleteOne({_id: id}).exec().then(() => {
     res.status(200).json({

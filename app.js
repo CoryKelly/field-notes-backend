@@ -1,6 +1,5 @@
 const express = require('express')
 const { expressCspHeader } = require('express-csp-header');
-const cors = require('cors')
 const app = express()
 const morgan = require('morgan')
 const { json, urlencoded } = require('body-parser')
@@ -13,7 +12,6 @@ const port = process.env.PORT || 3000
 const postRoutes = require('./api/routes/post')
 
 // Middleware
-app.use(cors())
 app.use(morgan('dev'))
 app.use(expressCspHeader({
   directives: {
