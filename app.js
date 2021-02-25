@@ -13,6 +13,7 @@ const port = process.env.PORT || 3000
 const postRoutes = require('./api/routes/post')
 
 // Middleware
+app.use(cors())
 app.use(morgan('dev'))
 app.use(expressCspHeader({
   directives: {
@@ -22,7 +23,6 @@ app.use(expressCspHeader({
 app.use('/static/', express.static('static'))
 app.use(urlencoded({extended: false}))
 app.use(json())
-app.use(cors())
 app.use('/posts', postRoutes)
 
 app.use((req, res, next) => {
