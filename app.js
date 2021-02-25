@@ -13,7 +13,12 @@ const port = process.env.PORT || 3000
 const postRoutes = require('./api/routes/post')
 
 // Middleware
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+}
 app.options('*', cors())
+cors(corsOptions)
 app.use(morgan('dev'))
 app.use(expressCspHeader({
   directives: {

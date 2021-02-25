@@ -5,11 +5,6 @@ const multer = require('multer')
 const consola = require('consola')
 const router = express.Router()
 
-const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200
-}
-
 // Image Upload Config
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
@@ -27,7 +22,7 @@ const Post = require('../models/post')
 
 
 // GET ALL POST
-router.get('/', cors(corsOptions), (req, res) => {
+router.get('/',(req, res) => {
   Post.find().select('_id title notes task product amount units mowHeight date photo zone').exec().then(result => {
     const response = {
       count: result.length,
@@ -43,7 +38,7 @@ router.get('/', cors(corsOptions), (req, res) => {
 })
 
 // POST NEW POST
-router.post('/createPost', cors(corsOptions), upload.single('photo') , (req, res) => {
+router.post('/createPost', upload.single('photo') , (req, res) => {
   const post = new Post({
     _id: new Types.ObjectId(),
     title: req.body.title,
@@ -70,7 +65,7 @@ router.post('/createPost', cors(corsOptions), upload.single('photo') , (req, res
 })
 
 // GET POST BY ID
-router.get('/:postId', cors(corsOptions), (req, res) => {
+router.get('/:postId', (req, res) => {
   const { postId: id } = req.params;
   Post.findById(id).select('_id title notes task product amount units mowHeight date photo zone').exec().then(result => {
     if(result) {
@@ -87,7 +82,7 @@ router.get('/:postId', cors(corsOptions), (req, res) => {
 })
 
 // UPDATE Post
-router.patch('/:postId', cors(corsOptions), (req, res) => {
+router.patch('/:postId', (req, res) => {
   const { postId: id } = req.params;
   Post.updateOne({ _id: id }, { $set: req.body }).exec().then(() => {
     res.status(200).json({
@@ -101,7 +96,7 @@ router.patch('/:postId', cors(corsOptions), (req, res) => {
 })
 
 // DELETE Post
-router.delete('/:postId', cors(corsOptions), (req, res) => {
+router.delete('/:postId', (req, res) => {
   const { postId: id } = req.params;
   Post.deleteOne({_id: id}).exec().then(() => {
     res.status(200).json({
