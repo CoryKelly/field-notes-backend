@@ -6,7 +6,7 @@ const consola = require('consola')
 const router = express.Router()
 
 const corsOptions = {
-  origin: 'https://fieldnotes-f0ccd.web.app',
+  origin: '*',
   optionsSuccessStatus: 200
 }
 
