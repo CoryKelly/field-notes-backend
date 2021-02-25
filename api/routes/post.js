@@ -29,6 +29,7 @@ router.get('/',(req, res) => {
       post: result
     }
     res.status(200).json(response)
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
   }).catch(err => {
     console.log(err)
     res.status(500).json({
