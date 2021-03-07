@@ -19,11 +19,13 @@ app.use(expressCspHeader({
     'img-src': ['static', 'localhost:3000']
   }
 }));
+app.use(cors())
+app.options('*', cors())
+
 app.use('/static/', express.static('static'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-app.use(cors())
-app.options('*', cors())
+
 // Routes
 app.use('/posts', postRoutes)
 
