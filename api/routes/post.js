@@ -29,7 +29,6 @@ router.get('/',(req, res) => {
       post: result
     }
     res.status(200).json(response)
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
   }).catch(err => {
     console.log(err)
     res.status(500).json({
@@ -60,7 +59,6 @@ router.post('/createPost', upload.single('photo') , (req, res) => {
     res.status(201).json({
         title, notes, task, photo, _id, product, amount, units, mowHeight, date, zone
       })
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
   }).catch((err) => {
     consola.error(`Unable to save post to DB ${err}`)
   })
