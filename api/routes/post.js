@@ -1,5 +1,4 @@
 const express = require('express')
-const cors = require('cors')
 const { Types } = require('mongoose')
 const multer = require('multer')
 const consola = require('consola')

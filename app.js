@@ -3,7 +3,7 @@ const { expressCspHeader } = require('express-csp-header');
 const cors = require('cors')
 const app = express()
 const morgan = require('morgan')
-const { json, urlencoded } = require('body-parser')
+const bodyParser = require('body-parser')
 const consola = require('consola')
 const mongoose = require('mongoose')
 require('dotenv').config()
@@ -22,8 +22,20 @@ app.use(expressCspHeader({
   }
 }));
 app.use('/static/', express.static('static'))
-app.use(urlencoded({extended: false}))
-app.use(json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
+// CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, content-type, Accept Authorization')
+  if(req.method === 'OPTIONS'){
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
+    return res.status(200).json({})
+  }
+})
+
+// Routes
 app.use('/posts', postRoutes)
 
 app.use((req, res, next) => {
