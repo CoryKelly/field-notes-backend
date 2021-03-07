@@ -1,5 +1,6 @@
 const express = require('express')
 const { expressCspHeader } = require('express-csp-header');
+const cors = require('cors')
 const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -12,6 +13,13 @@ const port = process.env.PORT || 3000
 const postRoutes = require('./api/routes/post')
 
 // Middleware
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+  next();
+})
 app.use(morgan('dev'))
 app.use(expressCspHeader({
   directives: {
@@ -21,16 +29,6 @@ app.use(expressCspHeader({
 app.use('/static/', express.static('static'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-
-// CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, content-type, Accept Authorization')
-  if(req.method === 'OPTIONS'){
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
-    return res.status(200).json({})
-  }
-})
 
 // Routes
 app.use('/posts', postRoutes)
