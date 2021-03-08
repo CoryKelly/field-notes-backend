@@ -22,7 +22,7 @@ app.use(expressCspHeader({
 
 app.use(
   cors({
-    origin: true,
+    origin: "https://fieldnotes-f0ccd.web.app"
   })
 );
 app.use('/static/', express.static('static'))
