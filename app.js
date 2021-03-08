@@ -1,5 +1,6 @@
 const express = require('express')
-const { expressCspHeader } = require('express-csp-header');
+const { expressCspHeader } = require('express-csp-header')
+const cors = require('cors')
 const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -19,23 +20,11 @@ app.use(expressCspHeader({
   }
 }));
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-  console.log('CORS BABY!')
-
-  //intercepts OPTIONS method
-  if ('OPTIONS' === req.method) {
-    //respond with 200
-    res.send(200);
-  }
-  else {
-    //move on
-    next();
-  }
-});
-
+app.use(
+  cors({
+    origin: true,
+  })
+);
 app.use('/static/', express.static('static'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
