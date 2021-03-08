@@ -19,6 +19,7 @@ app.use(expressCspHeader({
     'img-src': ['static', 'localhost:3000']
   }
 }));
+
 app.use(cors())
 app.options('*', cors())
 

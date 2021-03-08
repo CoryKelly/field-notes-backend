@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const { Types } = require('mongoose')
 const multer = require('multer')
 const consola = require('consola')
@@ -21,7 +22,7 @@ const Post = require('../models/post')
 
 
 // GET ALL POST
-router.get('/',(req, res) => {
+router.get('/', cors(), (req, res) => {
   Post.find().select('_id title notes task product amount units mowHeight date photo zone').exec().then(result => {
     const response = {
       count: result.length,
