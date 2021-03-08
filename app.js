@@ -21,7 +21,7 @@ app.use(function(req, res, next) {
 
   console.log('middleware hit!')
 
-  if(req.method == 'OPTIONS') {
+  if(req.method === 'OPTIONS') {
     res.send()
   } else {
     next();
